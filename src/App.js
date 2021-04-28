@@ -3,36 +3,17 @@ import "./App.css";
 
 export const App = (props) => {
   const { items } = props;
-  const [listCopy, setListCopy] = useState([]);
-  let listItem = document.querySelectorAll("li");
-  let list = [];
-  if (listItem) {
-    // listItem.click();
-  }
-   const onDocumentClick = (event) => {
-    let copyList = [];
-    copyList = list;
-       if (event.target.id !== "") {
-      var i = copyList.indexOf(
-        document.getElementById(event.target.id).innerHTML
-      );
-      if (i !== -1) {
-        copyList.splice(i, 1);
-        copyList.unshift(document.getElementById(event.target.id).innerHTML);
-        setListCopy([]);
-        setListCopy(copyList);
-        list = copyList;
-      }
+  const [listCopy, setListCopy] = useState(items);
+  const onDocumentClick = (event) => {
+    if (event.target.id !== "" && event.target.id !== -1) {
+      listCopy.unshift(listCopy.splice(event.target.id, 1)[0]);
+      setListCopy([...listCopy]);
     }
   };
 
   useEffect(() => {
-    setListCopy(items);
-    list = items;
     document.addEventListener("click", onDocumentClick);
-  }, [items]);
-  
-  
+  }, []);
 
   return (
     <div>
